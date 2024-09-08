@@ -1,0 +1,60 @@
+// Tabla Empleado: Registro de los empleados
+Table Empleado {
+  ID_Empleado int [pk, increment] // Primary Key
+  Nombre varchar
+  Apellido varchar
+  Dni varchar [unique]
+  Correo varchar [unique]
+  Contraseña varcha
+}
+
+// Tabla Registro de Envíos: Detalles de los envíos
+Table Envios {
+  ID_Envio int [pk, increment] // Primary Key
+  Nombre_Remitente varchar
+  DNI_Remitente varchar
+  Peso decimal
+  Volumen decimal
+  Lugar_Envio varchar
+  Lugar_Destino varchar
+  Costo_Envio decimal
+  Codigo_Envio varchar [unique]
+  Estado_Envio enum('RECEPCIONADO', 'EN CAMINO', 'EN DESTINO', 'ENTREGADO') 
+  Fecha_Registro datetime 
+}
+
+// Tabla Modificaciones: Registro de cambios en el estado de envíos
+Table Modificaciones {
+  ID_Modificacion int [pk, increment] // Primary Key
+  ID_Empleado int [ref: > Empleado.ID_Empleado] // Foreign Key
+  ID_Envio int [ref: > Envios.ID_Envio] // Foreign Key
+  Momento_Modificacion datetime
+  Estado_Inicial enum('RECEPCIONADO', 'EN CAMINO', 'EN DESTINO', 'ENTREGADO')
+  Estado_Final enum('RECEPCIONADO', 'EN CAMINO', 'EN DESTINO', 'ENTREGADO')
+}
+
+// Tabla Factura: Emisión de la factura al finalizar el registro del envío
+Table Factura {
+  ID_Factura int [pk, increment] // Primary Key
+  ID_Envio int [ref: > Envios.ID_Envio] // Foreign Key
+  Fecha_Emision datetime
+  Total decimal
+}
+
+// Tabla Detalles Factura: Detalles específicos de la factura
+Table Detalles_Factura {
+  ID_Detalle int [pk, increment] // Primary Key
+  ID_Factura int [ref: > Factura.ID_Factura] // Foreign Key
+  Descripcion varchar
+  Cantidad int
+  Precio_Unitario decimal
+  Subtotal decimal
+}
+
+// Tabla Sesiones: Registro de sesiones de empleados
+Table Sesiones {
+  ID_Sesion int [pk, increment] // Primary Key
+  ID_Empleado int [ref: > Empleado.ID_Empleado] // Foreign Key
+  Inicio_Sesion datetime
+  Fin_Sesion datetime
+}
