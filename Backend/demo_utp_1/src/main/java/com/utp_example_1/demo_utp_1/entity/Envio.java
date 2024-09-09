@@ -1,25 +1,31 @@
 package com.utp_example_1.demo_utp_1.entity;
 
-import jakarta.persistence.*;
-
 import java.io.Serializable;
 
-@Entity
-@Table(name="envios", schema="public")
-public class Envio implements Serializable {
-    private static final long serialVersionUID = 1L;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Table;
 
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "envios_id_envios_seq")
-    @SequenceGenerator(name="envios_id_envios_seq", sequenceName="envios_id_envios_seq", allocationSize=1)
+@Entity
+@Table(name="envio", schema="public")
+public class Envio implements Serializable {
+    private static final long serialVersionUID = -4404733423008657622L;
+
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "envio_idenvios_seq")
+    @SequenceGenerator(name="envio_idenvios_seq", sequenceName="envio_idenvios_seq", allocationSize=1)
     @Id
     @Column(name = "IDENVIOS")
-    private Long id_envios;
+    private Long idenvios;
 
     @Column(name = "NOMBREREMITENTE")
-    private String nombre_remitente;
+    private String nombreremitente;
 
     @Column(name = "DNI")
-    private String dni_remitente;
+    private String dniremitente;
 
     @Column(name = "PESO")
     private Double peso;
@@ -28,33 +34,33 @@ public class Envio implements Serializable {
     private Double volumen;
 
     @Column(name = "LUGARENVIO")
-    private String lugar_envio;
+    private String lugarenvio;
 
     @Column(name = "LUGARDESTINO")
-    private String lugar_destino;
+    private String lugardestino;
 
-    public Long getIdEnvios() {
-        return id_envios;
+    public Long getIdenvios() {
+        return idenvios;
     }
 
-    public void setIdEnvios(Long idEnvios) {
-        this.id_envios = idEnvios;
+    public void setIdenvios(Long idenvios) {
+        this.idenvios = idenvios;
     }
 
-    public String getNombreRemitente() {
-        return nombre_remitente;
+    public String getNombreremitente() {
+        return nombreremitente;
     }
 
-    public void setNombreRemitente(String nombreRemitente) {
-        this.nombre_remitente = nombreRemitente;
+    public void setNombreremitente(String nombreremitente) {
+        this.nombreremitente = nombreremitente;
     }
 
-    public String getDniRemitente() {
-        return dni_remitente;
+    public String getDniremitente() {
+        return dniremitente;
     }
 
-    public void setDniRemitente(String dniRemitente) {
-        this.dni_remitente = dniRemitente;
+    public void setDniremitente(String dniremitente) {
+        this.dniremitente = dniremitente;
     }
 
     public Double getPeso() {
@@ -73,20 +79,19 @@ public class Envio implements Serializable {
         this.volumen = volumen;
     }
 
-    public String getLugarEnvio() {
-        return lugar_envio;
+    public String getLugarenvio() {
+        return lugarenvio;
     }
 
-    public void setLugarEnvio(String lugarEnvio) {
-        this.lugar_envio = lugarEnvio;
+    public void setLugarenvio(String lugarenvio) {
+        this.lugarenvio = lugarenvio;
     }
 
-    public String getLugarDestino() {
-        return lugar_destino;
+    public String getLugardestino() {
+        return lugardestino;
     }
 
-    public void setLugarDestino(String lugarDestino) {
-        this.lugar_destino = lugarDestino;
+    public void setLugardestino(String lugardestino) {
+        this.lugardestino = lugardestino;
     }
-
 }

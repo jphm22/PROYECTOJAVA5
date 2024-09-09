@@ -41,9 +41,7 @@ public class Persona implements Serializable{
 	
 	
 
-	public Long getIdpersona() {
-		return idpersona;
-	}
+	public Long getIdpersona() { return idpersona; }
 
 	public void setIdpersona(Long idpersona) {
 		this.idpersona = idpersona;

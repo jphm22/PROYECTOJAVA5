@@ -16,8 +16,8 @@ public class EnvioController {
     private EnvioRepository envioRepository;
 
     @GetMapping ("/envio")
-    public String listarEnvioS(Model model) {
-        model.addAttribute("envios", envioRepository.findAll());
+    public String listarEnvios(Model model) {
+        model.addAttribute("envio", envioRepository.findAll());
         return "envio";
     }
     @GetMapping ("/envio/nueva")
