@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CurrierFast SAC - Registro de datos</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(to right, #00a7d1, #6ee287); /* Gradiente similar al de la imagen */
+      color: white;
+    }
+    .navbar {
+      background-color: transparent;
+    }
+    .navbar-nav .nav-link {
+      color: white;
+    }
+    .custom-form {
+      background-color: rgba(255, 255, 255, 0.1); /* Fondo transparente con algo de opacidad */
+      border-radius: 20px;
+      padding: 20px;
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .form-label {
+      color: rgb(236, 230, 230);
+    }
+    .form-control {
+      border-radius: 20px;
+    }
+    .btn-registrar {
+      background-color: rgb(60, 15, 224);
+      color: white;
+      font-weight: bold;
+      border-radius: 20px;
+      padding: 10px 40px;
+    }
+    .btn-salir {
+      background-color: #8bffa1;
+      color: black;
+      font-weight: bold;
+      border-radius: 20px;
+    }
+    h2 {
+      color: rgb(18, 13, 13);
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+    .cost-code-box {
+      background-color: #bdb093;
+      border-radius: 15px;
+      padding: 10px 20px;
+      color: black;
+      font-weight: bold;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg">
+  <div class="container">
+    <a class="navbar-brand" href="#">
+      <img src="Imagenes/logo_prueba.png" alt="CurrierFast SAC" style="width: 60px;"> CURRIERFAST SAC
+    </a>
+    <div class="collapse navbar-collapse">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="#">Registros</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Envíos</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Confirmación</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Formulario -->
+<div class="container custom-form mt-5">
+  <h2 class="text-center">Registro de datos</h2>
+  <form th:action="@{/envio/guardar}" th:object="${envios}" method="post">
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <label for="nombreRemitente" class="form-label">Nombre del remitente</label>
+        <input type="text" class="form-control" id="nombreRemitente" th:field="*{nombre}" >
+      </div>
+      <div class="col-md-6 mb-3">
+        <label for="peso" class="form-label">Peso</label>
+        <input type="text" class="form-control" id="peso">
+      </div>
+      <div class="col-md-6 mb-3">
+        <label for="dniRemitente" class="form-label">DNI remitente</label>
+        <input type="text" class="form-control" id="dniRemitente">
+      </div>
+      <div class="col-md-6 mb-3">
+        <label for="volumen" class="form-label">Volumen</label>
+        <input type="text" class="form-control" id="volumen">
+      </div>
+      <div class="col-md-6 mb-3">
+        <label for="lugarEnvio" class="form-label">Lugar de envío</label>
+        <select class="form-select" id="lugarEnvio">
+          <option>Seleccionar</option>
+        </select>
+      </div>
+      <div class="col-md-6 mb-3">
+        <label for="categoriaEnvio" class="form-label">Categoría de envío</label>
+        <select class="form-select" id="categoriaEnvio">
+          <option>Seleccionar</option>
+        </select>
+      </div>
+      <div class="col-md-6 mb-3">
+        <label for="lugarDestino" class="form-label">Lugar de destino</label>
+        <select class="form-select" id="lugarDestino">
+          <option>Seleccionar</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="row mt-3">
+      <div class="col-md-6">
+        <div class="cost-code-box">Costo de envío</div>
+      </div>
+      <div class="col-md-6">
+        <div class="cost-code-box">Código</div>
+      </div>
+    </div>
+
+    <div class="text-center mt-4">
+      <button type="submit" class="btn btn-registrar">REGISTRAR</button>
+    </div>
+
+  </form>
+
+  <div class="text-end mt-3">
+    <button class="btn btn-salir">Salir</button>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
