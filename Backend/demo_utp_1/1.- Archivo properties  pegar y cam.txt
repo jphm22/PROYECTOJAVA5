@@ -1,0 +1,35 @@
+1.- Archivo properties  pegar y cambiar según las credenciales
+
+spring.datasource.url=jdbc:postgresql://localhost:5432/postgres?currentSchema=public
+spring.datasource.username=postgres
+spring.datasource.password=1234
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.format_sql=true
+spring.datasource.driver-class-name=org.postgresql.Driver
+server.port=8094
+
+
+2.- Creación de base de datos
+
+CREATE TABLE IF NOT EXISTS public.tt_persona
+(
+    idpersona bigint NOT NULL DEFAULT nextval('tt_persona_idpersona_seq'::regclass),
+    nombre character varying(255) COLLATE pg_catalog."default",
+    appaterno character varying(255) COLLATE pg_catalog."default",
+    appmaterno character varying(255) COLLATE pg_catalog."default",
+    dni character varying(255) COLLATE pg_catalog."default",
+    edad integer,
+    CONSTRAINT tt_persona_pkey PRIMARY KEY (idpersona)
+)
+
+
+3.- Sequencia
+
+
+CREATE SEQUENCE IF NOT EXISTS public.tt_persona_idpersona_seq
+    INCREMENT 1
+    START 1
+    MINVALUE 1
+    MAXVALUE 2147483647
+    CACHE 1;

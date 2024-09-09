@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Formulario de Persona</title>
+</head>
+<body>
+    <h1>Formulario de Persona</h1>
+    <form th:action="@{/persona/guardar}" th:object="${persona}" method="post">
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" th:field="*{nombre}" /><br/>
+
+        <label for="appaterno">Apellido Paterno:</label>
+        <input type="text" id="appaterno" name="appaterno" th:field="*{appaterno}" /><br/>
+		
+		<label for="apmaterno">Apellido Materno:</label>
+        <input type="text" id="apmaterno" name="apmaterno" th:field="*{apmaterno}" /><br/>
+				
+		<label for="dni">DNI:</label>
+        <input type="text" id="dni" name="dni" th:field="*{dni}" /><br/>
+						
+		<label for="edad">EDAD:</label>
+        <input type="text" id="edad" name="edad" th:field="*{edad}" /><br/>
+
+       
+
+        <button type="submit">Guardar</button>
+    </form>
+    <a href="/personas">Volver al listado</a>
+</body>
+</html>

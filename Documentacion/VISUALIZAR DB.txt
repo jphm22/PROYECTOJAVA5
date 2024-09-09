@@ -58,3 +58,65 @@ Table Sesiones {
   Inicio_Sesion datetime
   Fin_Sesion datetime
 }
+
+-- Tabla Empleado
+CREATE TABLE Empleado (
+    ID_Empleado SERIAL PRIMARY KEY, 
+    Nombre VARCHAR(255) NOT NULL, 
+    Apellido VARCHAR(255) NOT NULL, 
+    Dni VARCHAR(20) UNIQUE NOT NULL, 
+    Correo VARCHAR(255) UNIQUE NOT NULL, 
+    Contraseña VARCHAR(255) NOT NULL
+);
+
+-- Tabla Registro de Envíos
+CREATE TABLE Envios (
+    ID_Envio SERIAL PRIMARY KEY, 
+    Nombre_Remitente VARCHAR(255) NOT NULL, 
+    DNI_Remitente VARCHAR(20) NOT NULL, 
+    Peso DECIMAL(10,2) NOT NULL, 
+    Volumen DECIMAL(10,2) NOT NULL, 
+    Lugar_Envio VARCHAR(255) NOT NULL, 
+    Lugar_Destino VARCHAR(255) NOT NULL, 
+    Costo_Envio DECIMAL(10,2) NOT NULL, 
+    Codigo_Envio VARCHAR(100) UNIQUE NOT NULL, 
+    Estado_Envio VARCHAR(20) CHECK (Estado_Envio IN ('RECEPCIONADO', 'EN CAMINO', 'EN DESTINO', 'ENTREGADO')) NOT NULL, 
+    Fecha_Registro TIMESTAMP NOT NULL
+);
+
+-- Tabla Modificaciones
+CREATE TABLE Modificaciones (
+    ID_Modificacion SERIAL PRIMARY KEY, 
+    ID_Empleado INT REFERENCES Empleado(ID_Empleado) ON DELETE CASCADE, 
+    ID_Envio INT REFERENCES Envios(ID_Envio) ON DELETE CASCADE, 
+    Momento_Modificacion TIMESTAMP NOT NULL, 
+    Estado_Inicial VARCHAR(20) CHECK (Estado_Inicial IN ('RECEPCIONADO', 'EN CAMINO', 'EN DESTINO', 'ENTREGADO')) NOT NULL, 
+    Estado_Final VARCHAR(20) CHECK (Estado_Final IN ('RECEPCIONADO', 'EN CAMINO', 'EN DESTINO', 'ENTREGADO')) NOT NULL
+);
+
+-- Tabla Factura
+CREATE TABLE Factura (
+    ID_Factura SERIAL PRIMARY KEY, 
+    ID_Envio INT REFERENCES Envios(ID_Envio) ON DELETE CASCADE, 
+    Fecha_Emision TIMESTAMP NOT NULL, 
+    Total DECIMAL(10,2) NOT NULL
+);
+
+-- Tabla Detalles Factura
+CREATE TABLE Detalles_Factura (
+    ID_Detalle SERIAL PRIMARY KEY, 
+    ID_Factura INT REFERENCES Factura(ID_Factura) ON DELETE CASCADE, 
+    Descripcion VARCHAR(255) NOT NULL, 
+    Cantidad INT NOT NULL, 
+    Precio_Unitario DECIMAL(10,2) NOT NULL, 
+    Subtotal DECIMAL(10,2) NOT NULL
+);
+
+-- Tabla Sesiones
+CREATE TABLE Sesiones (
+    ID_Sesion SERIAL PRIMARY KEY, 
+    ID_Empleado INT REFERENCES Empleado(ID_Empleado) ON DELETE CASCADE, 
+    Inicio_Sesion TIMESTAMP NOT NULL, 
+    Fin_Sesion TIMESTAMP
+);
+
