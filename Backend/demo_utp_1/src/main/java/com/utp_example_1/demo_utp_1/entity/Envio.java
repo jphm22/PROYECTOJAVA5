@@ -1,97 +1,56 @@
 package com.utp_example_1.demo_utp_1.entity;
 
 import java.io.Serializable;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.SequenceGenerator;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
-@Table(name="envio", schema="public")
+@Table(name = "envios", schema="public")
 public class Envio implements Serializable {
-    private static final long serialVersionUID = -4404733423008657622L;
+    private static final long serialVersionUID = 1L;
 
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "envio_idenvios_seq")
-    @SequenceGenerator(name="envio_idenvios_seq", sequenceName="envio_idenvios_seq", allocationSize=1)
     @Id
-    @Column(name = "IDENVIOS")
-    private Long idenvios;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID_Envio")
+    private Long idEnvio;
 
-    @Column(name = "NOMBREREMITENTE")
-    private String nombreremitente;
+    @Column(name = "Nombre_Remitente", nullable = false)
+    private String nombreRemitente;
 
-    @Column(name = "DNI")
-    private String dniremitente;
+    @Column(name = "DNI_Remitente", nullable = false)
+    private String dniRemitente;
 
-    @Column(name = "PESO")
+    @Column(name = "Peso", nullable = false)
     private Double peso;
 
-    @Column(name = "VOLUMEN")
+    @Column(name = "Volumen", nullable = false)
     private Double volumen;
 
-    @Column(name = "LUGARENVIO")
-    private String lugarenvio;
+    @Column(name = "Lugar_Envio", nullable = false)
+    private String lugarEnvio;
 
-    @Column(name = "LUGARDESTINO")
-    private String lugardestino;
+    @Column(name = "Lugar_Destino", nullable = false)
+    private String lugarDestino;
 
-    public Long getIdenvios() {
-        return idenvios;
-    }
+    // Getters y setters
+    public Long getIdEnvio() { return idEnvio; }
+    public void setIdEnvio(Long idEnvio) { this.idEnvio = idEnvio; }
 
-    public void setIdenvios(Long idenvios) {
-        this.idenvios = idenvios;
-    }
+    public String getNombreRemitente() { return nombreRemitente; }
+    public void setNombreRemitente(String nombreRemitente) { this.nombreRemitente = nombreRemitente; }
 
-    public String getNombreremitente() {
-        return nombreremitente;
-    }
+    public String getDniRemitente() { return dniRemitente; }
+    public void setDniRemitente(String dniRemitente) { this.dniRemitente = dniRemitente; }
 
-    public void setNombreremitente(String nombreremitente) {
-        this.nombreremitente = nombreremitente;
-    }
+    public Double getPeso() { return peso; }
+    public void setPeso(Double peso) { this.peso = peso; }
 
-    public String getDniremitente() {
-        return dniremitente;
-    }
+    public Double getVolumen() { return volumen; }
+    public void setVolumen(Double volumen) { this.volumen = volumen; }
 
-    public void setDniremitente(String dniremitente) {
-        this.dniremitente = dniremitente;
-    }
+    public String getLugarEnvio() { return lugarEnvio; }
+    public void setLugarEnvio(String lugarEnvio) { this.lugarEnvio = lugarEnvio; }
 
-    public Double getPeso() {
-        return peso;
-    }
-
-    public void setPeso(Double peso) {
-        this.peso = peso;
-    }
-
-    public Double getVolumen() {
-        return volumen;
-    }
-
-    public void setVolumen(Double volumen) {
-        this.volumen = volumen;
-    }
-
-    public String getLugarenvio() {
-        return lugarenvio;
-    }
-
-    public void setLugarenvio(String lugarenvio) {
-        this.lugarenvio = lugarenvio;
-    }
-
-    public String getLugardestino() {
-        return lugardestino;
-    }
-
-    public void setLugardestino(String lugardestino) {
-        this.lugardestino = lugardestino;
-    }
+    public String getLugarDestino() { return lugarDestino; }
+    public void setLugarDestino(String lugarDestino) { this.lugarDestino = lugarDestino; }
 }
+

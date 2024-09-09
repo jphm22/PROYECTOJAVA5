@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Formulario de Envio</title>
+</head>
+<body>
+<h1>Formulario de Envio</h1>
+<form th:action="@{/envio/guardar}" th:object="${envio}" method="post">
+  <label for="nombreRemitente">Nombre Remitente:</label>
+  <input type="text" id="nombreRemitente" th:field="*{nombreRemitente}" required/><br/>
+
+  <label for="dniRemitente">DNI Remitente:</label>
+  <input type="text" id="dniRemitente" th:field="*{dniRemitente}" required/><br/>
+
+  <label for="peso">Peso:</label>
+  <input type="text" id="peso" th:field="*{peso}" required/><br/>
+
+  <label for="volumen">Volumen:</label>
+  <input type="text" id="volumen" th:field="*{volumen}" required/><br/>
+
+  <label for="lugarEnvio">Lugar de Envío:</label>
+  <input type="text" id="lugarEnvio" th:field="*{lugarEnvio}" required/><br/>
+
+  <label for="lugarDestino">Lugar de Destino:</label>
+  <input type="text" id="lugarDestino" th:field="*{lugarDestino}" required/><br/>
+
+  <button type="submit">Guardar</button>
+</form>
+<a href="/envios">Volver al listado</a>
+</body>
+</html>
