@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Listado de Envios</title>
+</head>
+<body>
+<h1>Listado de Envios</h1>
+<h3 th:inline="text">Bienvenido de nuevo <span th:remove="tag" sec:authentication="name">thymeleaf</span>!</h3>
+<form th:action="@{/logout}" method="post">
+    <input type="submit" value="Sign Out"/>
+</form>
+<table>
+    <tr>
+        <th>ID Envio</th>
+        <th>Nombre Remitente</th>
+        <th>DNI Remitente</th>
+        <th>Peso</th>
+        <th>Volumen</th>
+        <th>Lugar Envío</th>
+        <th>Lugar Destino</th>
+    </tr>
+    <tr th:each="envio : ${envios}">
+        <td th:text="${envio.idEnvio}"></td>
+        <td th:text="${envio.nombreRemitente}"></td>
+        <td th:text="${envio.dniRemitente}"></td>
+        <td th:text="${envio.peso}"></td>
+        <td th:text="${envio.volumen}"></td>
+        <td th:text="${envio.lugarEnvio}"></td>
+        <td th:text="${envio.lugarDestino}"></td>
+    </tr>
+</table>
+<a href="/envio/nuevo">Registrar nuevo envio</a>
+</body>
+</html>

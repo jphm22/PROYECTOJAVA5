@@ -1,17 +1,21 @@
 package com.sistemaEnvios.utp1.config;
 
+import com.sistemaEnvios.utp1.service.impl.UserDetailsServiceImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.Customizer;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
+
+import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
 @EnableWebSecurity
@@ -19,21 +23,39 @@ import org.springframework.security.web.SecurityFilterChain;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
+
+    @Autowired
+    private UserDetailsServiceImpl usuarioServicio;
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        return http
-                .csrf(csrf -> csrf.disable())
-                .authorizeHttpRequests(auth -> auth.requestMatchers("/public/**").permitAll()
-                .requestMatchers("/v1/home").authenticated()
-                .requestMatchers("/v1/").hasAuthority("ADMIN").anyRequest().authenticated()
+        http
+                .authorizeHttpRequests((requests) -> requests
+                        .requestMatchers("/", "/home", "/home/**").permitAll()
+                        .anyRequest().authenticated()
                 )
-                //asignarle al form por defecto q da spring
-                .formLogin(Customizer.withDefaults())
-                .build();
+                .formLogin((form) -> form
+                        .loginPage("/login")
+                        .defaultSuccessUrl("/v1/envios", true)
+                        .permitAll()
+                )
+                .logout((logout) -> logout.permitAll());
+
+        return http.build();
     }
+
+
 
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+
     }
+    @Bean
+    public DaoAuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider auth = new DaoAuthenticationProvider();
+        auth.setUserDetailsService(usuarioServicio);
+        auth.setPasswordEncoder(passwordEncoder());
+        return auth;
+    }
+
 }

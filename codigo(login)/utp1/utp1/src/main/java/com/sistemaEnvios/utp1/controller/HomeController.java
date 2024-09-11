@@ -14,10 +14,13 @@ public class HomeController {
     public String home() {
         return "Private Home";
     }
+
+
     @GetMapping("/admin")
     @PreAuthorize("hasAuthority('ADMIN')")
     public String admin() {
         return "Admin";
     }
+
 }
 
