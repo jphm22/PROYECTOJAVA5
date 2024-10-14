@@ -70,22 +70,26 @@
             </div>
             <!-- Login Container -->
             <div class="login-container">
-                <form>
+                <form method="post" action="/acceso">
                     <h1 class="text-center text-danger form-group">Bienvenido</h1>
                     <div class="form-group">
                         <label for="nombre">Nombre</label>
-                        <input type="text" class="form-control" id="nombre" placeholder="Nombre">
+                        <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre">
                     </div>
                     <div class="form-group">
                         <label for="correo">Correo</label>
-                        <input type="email" class="form-control" id="correo" placeholder="Correo">
+                        <input type="email" class="form-control" id="correo" name="correo" placeholder="Correo" required>
                     </div>
                     <div class="form-group">
                         <label for="contraseña">Contraseña</label>
-                        <input type="password" class="form-control" id="contraseña" placeholder="Contraseña">
+                        <input type="password" class="form-control" id="contraseña" name="contraseña" placeholder="Contraseña" required>
                     </div>
-                    <button type="button" class="btn-custom mt-3" onclick="window.location.href='PaginaPrincipal.html'">ENTRAR</button>
+                    <button type="submit" class="btn-custom mt-3">ENTRAR</button>
                 </form>
+
+                <div th:if="${error}" class="alert alert-danger mt-3">
+                    <p th:text="${error}"></p>
+                </div>
             </div>
         </div>
     </div>
