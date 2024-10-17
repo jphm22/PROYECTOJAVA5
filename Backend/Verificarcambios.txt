@@ -1,0 +1,64 @@
+-- SEQUENCE: public.tt_persona_idpersona_seq
+
+-- DROP SEQUENCE IF EXISTS public.tt_persona_idpersona_seq;
+
+CREATE SEQUENCE IF NOT EXISTS public.tt_persona_idpersona_seq
+    INCREMENT 1
+    START 1
+    MINVALUE 1
+    MAXVALUE 2147483647
+    CACHE 1;
+
+ALTER SEQUENCE public.tt_persona_idpersona_seq
+    OWNER TO postgres;
+
+-- SEQUENCE: public.tt_auditoria_seq
+
+-- DROP SEQUENCE IF EXISTS public.tt_auditoria_seq;
+
+CREATE SEQUENCE IF NOT EXISTS public.tt_auditoria_seq
+    INCREMENT 1
+    START 1
+    MINVALUE 1
+    MAXVALUE 2147483647
+    CACHE 1;
+
+ALTER SEQUENCE public.tt_auditoria_seq
+    OWNER TO postgres;
+
+-- Table: public.tt_persona
+
+-- DROP TABLE IF EXISTS public.tt_persona;
+
+CREATE TABLE IF NOT EXISTS public.tt_persona
+(
+    idpersona bigint NOT NULL DEFAULT nextval('tt_persona_idpersona_seq'::regclass),
+    nombre character varying(255) COLLATE pg_catalog."default",
+    appaterno character varying(255) COLLATE pg_catalog."default",
+    appmaterno character varying(255) COLLATE pg_catalog."default",
+    dni character varying(255) COLLATE pg_catalog."default",
+    edad integer,
+    CONSTRAINT tt_persona_pkey PRIMARY KEY (idpersona)
+)
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.tt_persona
+    OWNER to postgres;
+
+-- Table: public.tt_auditoria
+
+-- DROP TABLE IF EXISTS public.tt_auditoria;
+
+CREATE TABLE IF NOT EXISTS public.tt_auditoria
+(
+    idauditoria bigint NOT NULL DEFAULT nextval('tt_persona_idpersona_seq'::regclass),
+    usuario character varying(255) COLLATE pg_catalog."default",
+    fecha_registro timestamp without time zone,
+    ip_maquina character varying(255) COLLATE pg_catalog."default",
+    idpersona bigint NOT NULL,
+    CONSTRAINT tt_auditoria_pkey PRIMARY KEY (idpersona)
+)
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.tt_auditoria
+    OWNER to postgres;

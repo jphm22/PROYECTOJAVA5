@@ -5,10 +5,11 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "empleado", schema="public")
 public class Empleado {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
+    private Long id;
     private String nombre;
     private String correo;
     private String contraseña;

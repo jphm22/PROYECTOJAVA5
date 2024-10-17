@@ -120,3 +120,34 @@ CREATE TABLE Sesiones (
     Fin_Sesion TIMESTAMP
 );
 
+
+-- SEQUENCE: public.empleado_seq
+
+-- DROP SEQUENCE IF EXISTS public.empleado_seq;
+
+CREATE SEQUENCE IF NOT EXISTS public.empleado_seq
+    INCREMENT 1
+    START 1
+    MINVALUE 1
+    MAXVALUE 2147483647
+    CACHE 1;
+ALTER SEQUENCE public.empleado_seq
+    OWNER TO postgres;
+
+-- TABLE: public.empleado
+
+CREATE TABLE IF NOT EXISTS public.empleado
+(
+    id_empleado bigint NOT NULL DEFAULT nextval('empleado_seq'::regclass),
+    nombre character varying(255) NOT NULL,
+    apellido character varying(255) NOT NULL,
+    dni character varying(20) NOT NULL UNIQUE,
+    correo character varying(255) NOT NULL UNIQUE,
+    contraseña character varying(255) NOT NULL,
+    CONSTRAINT empleado_pkey PRIMARY KEY (id_empleado)
+)
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.empleado
+    OWNER TO postgres;
+

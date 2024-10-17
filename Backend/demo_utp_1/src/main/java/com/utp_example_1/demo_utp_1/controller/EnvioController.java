@@ -94,4 +94,10 @@ public class EnvioController {
         model.addAttribute("acceso", envioRepository.findAll());
         return "acceso";
     }*/
+
+    @GetMapping("/confirmacion")
+    public String mostrarconfirmacion(Model model) {
+        model.addAttribute("confirmacion", envioRepository.findAll());
+        return "confirmacion";
+    }
 }

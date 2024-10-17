@@ -10,6 +10,7 @@ public class Envio implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     @Column(name = "ID_Envio")
     private Long idEnvio;
 
