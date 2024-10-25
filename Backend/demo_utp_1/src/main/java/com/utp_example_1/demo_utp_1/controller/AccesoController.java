@@ -1,6 +1,8 @@
 package com.utp_example_1.demo_utp_1.controller;
 
 import com.utp_example_1.demo_utp_1.service.EmpleadoService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +21,11 @@ public class AccesoController {
         return "login";
     }
 
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request, HttpServletResponse response) {
+
+        return "redirect:/login?logout";
+    }
 //    @GetMapping("/acceso")
 //    public String mostrarFormularioAcceso() {
 //        return "acceso"; // Nombre de la plantilla HTML (acceso.html)

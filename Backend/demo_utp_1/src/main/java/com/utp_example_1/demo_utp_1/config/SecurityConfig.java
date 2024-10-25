@@ -37,7 +37,12 @@ import org.springframework.security.web.SecurityFilterChain;
                             .defaultSuccessUrl("/envios", true)
                             .permitAll()
                     )
-                    .logout((logout) -> logout.permitAll());
+                    .logout((logout) -> logout
+                            .logoutUrl("/logout")
+                            .logoutSuccessUrl("/login?logout")
+                            .invalidateHttpSession(true) // Invalidar la sesión actual
+                            .deleteCookies("JSESSIONID") // Eliminar cookies específicas
+                    );
 
             return http.build();
         }
