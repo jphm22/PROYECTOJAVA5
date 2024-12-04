@@ -106,17 +106,37 @@
       </div>
       <div class="col-md-6 mb-3">
         <label for="lugarEnvio" class="form-label">Lugar de envío</label>
-        <input class="form-select" id="lugarEnvio" th:field="*{lugarEnvio}" required>
+        <select class="form-select" id="lugarEnvio" th:field="*{lugarEnvio}" required>
+          <option value="" selected disabled>Seleccionar</option>
+          <option value="Lima">Lima</option>
+          <option value="Cusco">Cusco</option>
+          <option value="Arequipa">Arequipa</option>
+          <option value="Piura">Piura</option>
+          <option value="Trujillo">Trujillo</option>
+        </select>
       </div>
       <div class="col-md-6 mb-3">
         <label for="categoriaEnvio" class="form-label">Categoría de envío</label>
         <select class="form-select" id="categoriaEnvio">
-          <option>Seleccionar</option>
+          <option value="" selected disabled>Seleccionar</option>
+          <option value="Documentos">Documentos</option>
+          <option value="Electrónicos">Electrónicos</option>
+          <option value="Ropa">Ropa</option>
+          <option value="Alimentos">Alimentos</option>
+          <option value="Medicinas">Medicinas</option>
         </select>
+
       </div>
       <div class="col-md-6 mb-3">
         <label for="lugarDestino" class="form-label">Lugar de destino</label>
-        <input class="form-select" id="lugarDestino" th:field="*{lugarDestino}" required>
+        <select class="form-select" id="lugarDestino" th:field="*{lugarDestino}" required>
+          <option value="" selected disabled>Seleccionar</option>
+          <option value="Lima">Lima</option>
+          <option value="Cusco">Cusco</option>
+          <option value="Arequipa">Arequipa</option>
+          <option value="Piura">Piura</option>
+          <option value="Trujillo">Trujillo</option>
+        </select>
       </div>
     </div>
 
