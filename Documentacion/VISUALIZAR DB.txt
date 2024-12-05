@@ -150,4 +150,33 @@ TABLESPACE pg_default;
 
 ALTER TABLE IF EXISTS public.empleado
     OWNER TO postgres;
+-- SEQUENCE: public.tt_sesion_seq
+
+-- DROP SEQUENCE IF EXISTS public.tt_sesion_seq;
+
+CREATE SEQUENCE IF NOT EXISTS public.tt_sesion_seq
+    INCREMENT 1
+    START 1
+    MINVALUE 1
+    MAXVALUE 2147483647
+    CACHE 1;
+
+ALTER SEQUENCE public.tt_sesion_seq
+    OWNER TO postgres;
+
+-- TABLE: public.tt_sesion
+
+CREATE TABLE IF NOT EXISTS public.tt_sesion
+(
+    id_sesion bigint NOT NULL DEFAULT nextval('tt_sesion_seq'::regclass),
+    id_empleado bigint NOT NULL,
+    inicio_sesion timestamp without time zone NOT NULL,
+    CONSTRAINT tt_sesion_pkey PRIMARY KEY (id_sesion),
+    CONSTRAINT tt_sesion_empleado_fkey FOREIGN KEY (id_empleado)
+        REFERENCES public.empleado (id_empleado) ON DELETE CASCADE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.tt_sesion
+    OWNER TO postgres;
 
