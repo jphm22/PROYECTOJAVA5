@@ -5,12 +5,12 @@ import com.utp_example_1.demo_utp_1.entity.Auditoria;
 import com.utp_example_1.demo_utp_1.interfaces.AuditoriaRepository;
 import com.utp_example_1.demo_utp_1.service.EnvioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import com.utp_example_1.demo_utp_1.entity.Envio;
 import com.utp_example_1.demo_utp_1.interfaces.EnvioRepository;
@@ -18,6 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.sql.SQLException;
 import java.util.Optional;
 
 @Controller
@@ -51,7 +52,7 @@ public class EnvioController {
 
         Envio nuevo_envio = new Envio();
         Auditoria auditoria = new Auditoria();
-
+        nuevo_envio.setIdEnvio(envio.getIdEnvio());
         nuevo_envio.setNombreRemitente(envio.getNombreRemitente());
         nuevo_envio.setDniRemitente(envio.getDniRemitente());
         nuevo_envio.setPeso(envio.getPeso());
@@ -99,5 +100,21 @@ public class EnvioController {
     public String mostrarconfirmacion(Model model) {
         model.addAttribute("confirmacion", envioRepository.findAll());
         return "confirmacion";
+    }
+
+    @GetMapping(value="/pdf/{id}")
+    public HttpEntity<byte[]> generarreporte (@PathVariable(value="id") Long id) throws SQLException {
+
+
+        System.out.println(id);
+
+
+        byte[] documentBody = envioService.generarpdf(id);
+        HttpHeaders header = new HttpHeaders();
+        header.setContentType(MediaType.APPLICATION_PDF);
+        header.set(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + "documento.pdf");
+        header.setContentLength(documentBody.length);
+
+        return new HttpEntity<byte[]>(documentBody, header);
     }
 }
