@@ -29,7 +29,7 @@ import org.springframework.security.web.SecurityFilterChain;
         public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
             http
                     .authorizeHttpRequests((requests) -> requests
-                            .requestMatchers("/", "/home", "/home/**").permitAll()
+                            .requestMatchers("/", "/home", "/home/**","/Imagenes/**").permitAll()
                             .anyRequest().authenticated()
                     )
                     .formLogin((form) -> form
