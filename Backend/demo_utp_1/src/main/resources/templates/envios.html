@@ -109,13 +109,20 @@
     <td th:text="${envio.peso} + ' kg'"></td>
     <td th:text="${envio.volumen} + ' m³'"></td>
     <td>
-      <a th:href="@{/envio/editar/{id}(id=${envio.idEnvio})}" class="btn btn-warning btn-sm">Editar</a>
+      <a th:href="@{/envio/editar/{id}(id=${envio.idEnvio})}" class="btn btn-warning btn-sm">
+        <i class="fa-solid fa-pencil-alt"></i> Editar
+      </a>
       <form th:action="@{/envio/eliminar/{id}(id=${envio.idEnvio})}" method="post" style="display:inline;">
-        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de que deseas eliminar esta persona?');">Eliminar</button>
+        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de que deseas eliminar esta persona?');">
+          <i class="fa-solid fa-trash"></i> Eliminar
+        </button>
       </form>
       <button type="button" class="btn btn-success btn-sm" th:onclick="'GenerarPDF(' + ${envio.idEnvio} + ')'">
         <i class="fa-solid fa-file-pdf"></i> Exportar PDF
       </button>
+      <a class="btn btn-link btn-sm" th:href="'/pdf/' + ${envio.idEnvio}" target="_blank">
+        <i class="fa-solid fa-download"></i> Descargar Manualmente
+      </a>
     </td>
   </tr>
   </tbody>
