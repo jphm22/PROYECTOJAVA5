@@ -68,21 +68,16 @@
 <div class="container mt-5">
   <h1 class="text-center mb-4">Estado del envío</h1>
 
-<form class="row g-3 justify-content-center">
+<form action="/envios" method="get" class="row g-3 justify-content-center">
   <div class="col-md-4">
-    <label for="codigo" class="form-label">Código</label>
-    <input type="text" class="form-control" id="codigo" placeholder="Ingresa el código">
+    <label class="form-label">DNI</label>
+    <input type="text" name="dni" class="form-control" placeholder="Ingresa el DNI" th:value="${dni}">
+
   </div>
   <div class="col-md-2 d-flex align-items-end">
-    <button type="button" class="btn btn-primary w-100">Buscar</button>
+    <button type="submit" class="btn btn-primary w-100">Buscar</button>
   </div>
-  <div class="col-md-4">
-    <label for="estado" class="form-label">Estado</label>
-    <input type="text" class="form-control" id="estado" placeholder="Estado actual del envío">
-  </div>
-  <div class="col-md-2 d-flex align-items-end">
-    <button type="button" class="btn btn-warning w-100">Modificar</button>
-  </div>
+
 </form>
 
 <div class="table-responsive mt-5">
@@ -129,10 +124,20 @@
   </tbody>
 </table>
 
-</div>
-  <a href="/envio/nuevo">Registrar nuevo envio</a>
-</div>
-
+  <nav>
+    <ul class="pagination justify-content-center">
+      <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled'">
+        <a class="page-link" th:href="@{/envios(page=${currentPage - 1}, dni=${dni})}">Anterior</a>
+      </li>
+      <li class="page-item" th:each="i : ${#numbers.sequence(0, totalPages - 1)}"
+          th:classappend="${currentPage == i} ? 'active'">
+        <a class="page-link" th:href="@{/envios(page=${i}, dni=${dni})}" th:text="${i + 1}"></a>
+      </li>
+      <li class="page-item" th:classappend="${currentPage + 1 == totalPages} ? 'disabled'">
+        <a class="page-link" th:href="@{/envios(page=${currentPage + 1}, dni=${dni})}">Siguiente</a>
+      </li>
+    </ul>
+  </nav>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 <script>

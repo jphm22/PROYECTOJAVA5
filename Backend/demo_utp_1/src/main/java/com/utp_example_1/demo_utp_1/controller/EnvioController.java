@@ -5,6 +5,9 @@ import com.utp_example_1.demo_utp_1.entity.Auditoria;
 import com.utp_example_1.demo_utp_1.interfaces.AuditoriaRepository;
 import com.utp_example_1.demo_utp_1.service.EnvioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -32,11 +35,59 @@ public class EnvioController {
     private EnvioService envioService;
 
 
-    @GetMapping("/envios")
+    /*@GetMapping("/envios")
     public String listarEnvios(Model model) {
         model.addAttribute("envios", envioRepository.findAll());
         return "envios";
+    }*/
+    /*@GetMapping("/envios")
+    public String listarEnvios(@RequestParam(value = "dni", required = false) String dni, Model model) {
+        if (dni != null && !dni.isEmpty()) {
+            model.addAttribute("envios", envioRepository.findByDniRemitente(dni)); //filtrarporDNI
+        } else {
+            model.addAttribute("envios", envioRepository.findAll());
+        }
+        model.addAttribute("dni", dni);
+        return "envios";
+    }*/
+
+    // Nuevo endpoint para obtener los datos de peso y volumen según el DNI
+    @GetMapping("/envio/datosPorDni")
+    @ResponseBody
+    public EnvioDto obtenerDatosPorDni(@RequestParam("dni") String dni) {
+        Envio envio = envioRepository.findByDniRemitente(dni); //buscar por DNI
+        if (envio != null) {
+            EnvioDto envioDto = new EnvioDto();
+            envioDto.setPeso(envio.getPeso());
+            envioDto.setVolumen(envio.getVolumen());
+            return envioDto; // Devolvemos los datos en formato JSON
+        }
+        return null; // Si no se encuentra, devolvemos null
     }
+
+    @GetMapping("/envios")
+    public String listarEnvios(
+            @RequestParam(value = "dni", required = false) String dni,
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            Model model) {
+
+        int pageSize = 5; // Filas por página
+        Pageable pageable = PageRequest.of(page, pageSize);
+        Page<Envio> envios;
+
+        if (dni != null && !dni.isEmpty()) {
+            envios = envioRepository.findByDniRemitente(dni, pageable); // Ajusta tu repositorio si es necesario
+        } else {
+            envios = envioRepository.findAll(pageable);
+        }
+
+        model.addAttribute("envios", envios);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", envios.getTotalPages());
+        model.addAttribute("dni", dni);
+        return "envios";
+    }
+
 
     @GetMapping("/envio/nuevo")
     public String mostrarFormulario(Model model) {

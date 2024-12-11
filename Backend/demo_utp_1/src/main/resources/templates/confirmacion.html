@@ -52,9 +52,6 @@
             background-color: #6e2aa3;
             border-color: #6e2aa3;
         }
-
-
-
     </style>
 </head>
 <body>
@@ -89,17 +86,8 @@
             <input type="text" class="form-control" id="dni" placeholder="">
         </div>
         <div class="col-md-2 d-flex align-items-end">
-            <button type="button" class="btn btn-primary w-100">Buscar</button>
+            <button type="button" class="btn btn-primary w-100" id="buscarBtn">Buscar</button>
         </div>
-    </div>
-
-    <!-- Sección de Datos del Envío -->
-    <div class="row mb-3">
-        <div class="col-md-4">
-            <label for="codigo" class="form-label">Código</label>
-            <input type="text" class="form-control" id="codigo" placeholder="">
-        </div>
-
     </div>
 
     <!-- Tabla de Productos -->
@@ -107,28 +95,14 @@
         <table class="table table-bordered text-center">
             <thead class="table-primary">
             <tr>
-                <th scope="col">CÓDIGO</th>
-                <th scope="col">DESCRIPCIÓN</th>
-                <th scope="col">PRECIO</th>
-                <th scope="col">CANTIDAD</th>
-                <th scope="col">SUBTOTAL</th>
+                <th scope="col">PESO</th>
                 <th scope="col">VOLUMEN</th>
-                <th scope="col">SELECCIONAR</th>
+                <th scope="col">SUBTOTAL</th>
+                <th scope="col">ESTADO</th>
             </tr>
             </thead>
-            <tbody>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td>
-                    <button type="button" class="btn btn-success">Agregar</button>
-                </td>
-            </tr>
-            <!-- Más filas según sea necesario -->
+            <tbody id="enviosTabla">
+            <!-- Aquí se llenarán los datos -->
             </tbody>
         </table>
     </div>
@@ -136,14 +110,11 @@
     <!-- Botones de Acciones -->
     <div class="row mt-4">
         <div class="col-md-2">
-            <button type="button" class="btn btn-primary w-100">Imprimir Factura</button>
-        </div>
-        <div class="col-md-2">
-            <button type="button" class="btn btn-primary w-100">Generar Factura</button>
+            <button type="button" class="btn btn-primary w-100" id="imprimirBtn">Imprimir Factura</button>
         </div>
         <div class="col-md-2 ms-auto">
             <label for="total" class="form-label">Total</label>
-            <input type="text" class="form-control" id="total" placeholder="">
+            <input type="text" class="form-control" id="total" placeholder="" readonly>
         </div>
     </div>
 
@@ -158,5 +129,67 @@
 
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    // Datos simulados
+    const datosEnvios = [
+        { dni: '12345678', peso: 5, volumen: 10 },
+        { dni: '23456789', peso: 7, volumen: 15 },
+        { dni: '34567890', peso: 3, volumen: 8 },
+        { dni: '45678901', peso: 2, volumen: 5 },
+        { dni: '56789012', peso: 8, volumen: 20 },
+        { dni: '67890123', peso: 6, volumen: 12 },
+        { dni: '78901234', peso: 9, volumen: 18 },
+        { dni: '89012345', peso: 4, volumen: 9 },
+    ];
+
+    document.getElementById("buscarBtn").addEventListener("click", function() {
+        const dni = document.getElementById("dni").value;
+        const envio = datosEnvios.find(e => e.dni === dni);
+
+        // Si encontramos el DNI en los datos simulados
+        if (envio) {
+            const subtotal = envio.peso * envio.volumen;
+
+            // Limpiar la tabla antes de insertar los datos
+            const tabla = document.getElementById("enviosTabla");
+            tabla.innerHTML = `
+                <tr>
+                    <td>${envio.peso}</td>
+                    <td>${envio.volumen}</td>
+                    <td>${subtotal}</td>
+                    <td>
+                        <select class="form-select" id="estado">
+                            <option value="recepcionado">Recepcionado</option>
+                            <option value="entregado">Entregado</option>
+                            <option value="en-camino">En Camino</option>
+                        </select>
+                    </td>
+                </tr>
+            `;
+
+            // Actualizar el total
+            actualizarTotal(subtotal);
+        } else {
+            alert("No se encontraron datos para este DNI");
+        }
+    });
+
+    // Función para actualizar el total
+    function actualizarTotal(subtotal) {
+        let total = subtotal; // Solo un subtotal por ahora
+        document.getElementById("total").value = total.toFixed(2);
+    }
+
+    // Función para imprimir la factura
+    document.getElementById("imprimirBtn").addEventListener("click", function() {
+        const tabla = document.querySelector("table");
+        const ventana = window.open("", "_blank");
+        ventana.document.write("<html><head><title>Factura</title></head><body>");
+        ventana.document.write(tabla.outerHTML);
+        ventana.document.write("</body></html>");
+        ventana.document.close();
+        ventana.print();
+    });
+</script>
 </body>
 </html>
