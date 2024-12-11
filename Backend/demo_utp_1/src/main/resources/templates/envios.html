@@ -113,7 +113,7 @@
         <i class="fa-solid fa-pencil-alt"></i> Editar
       </a>
       <form th:action="@{/envio/eliminar/{id}(id=${envio.idEnvio})}" method="post" style="display:inline;">
-        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de que deseas eliminar esta persona?');">
+        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro que deseas eliminar esta remitente?');">
           <i class="fa-solid fa-trash"></i> Eliminar
         </button>
       </form>
