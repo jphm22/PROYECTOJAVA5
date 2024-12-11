@@ -120,8 +120,9 @@
       <button type="button" class="btn btn-success btn-sm" th:onclick="'GenerarPDF(' + ${envio.idEnvio} + ')'">
         <i class="fa-solid fa-file-pdf"></i> Exportar PDF
       </button>
-      <a class="btn btn-link btn-sm" th:href="'/pdf/' + ${envio.idEnvio}" target="_blank">
-        <i class="fa-solid fa-download"></i> Descargar Manualmente
+      <a class="btn btn-success btn-sm" th:href="'/pdf/' + ${envio.idEnvio}" target="_blank"
+         th:id="'downloadBtn_' + ${envio.idEnvio}">
+        <i class="fa-solid fa-download"></i> Descargar PDF
       </a>
     </td>
   </tr>
