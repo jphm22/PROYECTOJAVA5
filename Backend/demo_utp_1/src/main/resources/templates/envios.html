@@ -112,12 +112,8 @@
           <i class="fa-solid fa-trash"></i> Eliminar
         </button>
       </form>
-      <button type="button" class="btn btn-success btn-sm" th:onclick="'GenerarPDF(' + ${envio.idEnvio} + ')'">
-        <i class="fa-solid fa-file-pdf"></i> Exportar PDF
-      </button>
-      <a class="btn btn-success btn-sm" th:href="'/pdf/' + ${envio.idEnvio}" target="_blank"
-         th:id="'downloadBtn_' + ${envio.idEnvio}">
-        <i class="fa-solid fa-download"></i> Descargar PDF
+      <a href="/export-pdf" class="btn btn-primary float-end">
+        <i class="fas fa-file-pdf"></i> Exportar a PDF
       </a>
     </td>
   </tr>

@@ -11,6 +11,7 @@ import java.net.URL;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.ErrorManager;
 
@@ -63,4 +64,7 @@ public class EnvioService {
         return bytes;
     }
 
+    public List<Envio> listarEnvios() {
+        return envioRepository.findAll();
+    }
 }

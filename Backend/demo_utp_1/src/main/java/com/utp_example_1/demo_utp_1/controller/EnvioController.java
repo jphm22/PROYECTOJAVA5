@@ -4,13 +4,16 @@ import com.utp_example_1.demo_utp_1.dto.EnvioDto;
 import com.utp_example_1.demo_utp_1.entity.Auditoria;
 import com.utp_example_1.demo_utp_1.interfaces.AuditoriaRepository;
 import com.utp_example_1.demo_utp_1.service.EnvioService;
+import com.utp_example_1.demo_utp_1.service.PDFExportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +25,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -33,7 +37,8 @@ public class EnvioController {
     private AuditoriaRepository auditoriaRepository;
     @Autowired
     private EnvioService envioService;
-
+    @Autowired
+    private PDFExportService pdfExportService;
 
     /*@GetMapping("/envios")
     public String listarEnvios(Model model) {
@@ -167,5 +172,21 @@ public class EnvioController {
         header.setContentLength(documentBody.length);
 
         return new HttpEntity<byte[]>(documentBody, header);
+    }
+
+    @GetMapping("/export-pdf")
+    public ResponseEntity<byte[]> exportToPDF() {
+        try {
+            List<Envio> envios = envioService.listarEnvios();
+            byte[] pdfBytes = pdfExportService.exportEnviosToPDF(envios);
+            
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_PDF);
+            headers.setContentDispositionFormData("attachment", "envios.pdf");
+            
+            return new ResponseEntity<>(pdfBytes, headers, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }
